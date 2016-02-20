@@ -2,14 +2,14 @@ package ast
 
 import (
 	"fmt"
-	"regexp"
+	"strings"
 
 	"github.com/bbuck/dragonscript"
 	"github.com/bbuck/dragonscript/lexer"
 	"github.com/bbuck/dragonscript/memory"
 )
 
-var validOperators = regexp.MustCompile(`==?|\*\*=?|\*=?|\+=?|/=?|-=?|!(?:=|~)?|~=|<<=?|<=?|>>=?|>=?|\^=?`)
+const validOperators = "= == + += - -= * *= / /= ** **= ~= ! != !~ ^ ^= < <= <<= > >= >>= && ||"
 
 type OperatorNode struct {
 	token *lexer.Token
@@ -18,7 +18,7 @@ type OperatorNode struct {
 }
 
 func NewOperatorNode(t *lexer.Token, r Node, l Node) (*OperatorNode, error) {
-	if !validOperators.MatchString(t.Value) {
+	if !strings.Contains(validOperators, t.Value) {
 		return nil, fmt.Errorf("operator %q is not valid", t.Value)
 	}
 
