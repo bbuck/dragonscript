@@ -98,7 +98,7 @@ func intResult(t *lexer.Token, r dragonscript.Value, l dragonscript.Value) drago
 	case "+":
 		res = ri + li
 	case "-":
-		res = ri + li
+		res = ri - li
 	case "*":
 		res = ri * li
 	case "/":

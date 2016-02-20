@@ -1,6 +1,8 @@
 package parser
 
 import (
+	"fmt"
+
 	"github.com/bbuck/dragonscript/ast"
 	"github.com/bbuck/dragonscript/lexer"
 )
@@ -28,6 +30,15 @@ func (p *Parser) Parse() (ast.Node, error) {
 	}
 
 	return p.ast, p.err
+}
+
+func (p *Parser) expect(t lexer.TokenType) (*lexer.Token, error) {
+	next := p.nextToken()
+	if next.Type == t {
+		return next, nil
+	}
+
+	return nil, unexpectedTokenError(next)
 }
 
 func (p *Parser) nextToken() *lexer.Token {
@@ -58,4 +69,8 @@ func (p *Parser) peek(n int) *lexer.Token {
 	}
 
 	return t
+}
+
+func unexpectedTokenError(t *lexer.Token) error {
+	return fmt.Errorf("unexpected token %s encountered", t.Type)
 }

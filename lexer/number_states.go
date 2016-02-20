@@ -5,9 +5,12 @@ const numberString = "0123456789"
 func intState(l *Lexer) lexerState {
 	numbers := numberString + "_"
 	l.next()
-	if l.peek() == 'x' || l.peek() == 'X' {
+	test := l.peek()
+	if test == 'x' || test == 'X' {
 		l.next()
 		numbers += "abcdefABCDEF"
+	} else {
+		l.reverse()
 	}
 	final := l.run(numbers)
 

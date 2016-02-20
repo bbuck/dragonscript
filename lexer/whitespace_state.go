@@ -7,11 +7,12 @@ import (
 )
 
 func whitespaceState(l *Lexer) lexerState {
-	next := l.peek()
+	next := l.next()
 	// we exclude newlines as space characters because they're terminators
 	for next != '\n' && unicode.IsSpace(next) {
 		next = l.next()
 	}
+	l.reverse()
 	l.ignore()
 
 	switch {
